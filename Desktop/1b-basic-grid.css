@@ -1,0 +1,37 @@
+/* (A) GRID LAYOUT */
+.grid {
+  display: inline-grid;
+  grid-gap: 0px;
+}
+ 
+/* (B) OPTIONAL - CELLS */
+.head, .cell { padding: 10px; }
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  border: 0px solid #f18e8e;
+  background: #ffbfbf;
+}
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #c2ba3c;
+  background: #f8ffde;
+}
+
+.button {
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            font-size: 18px;
+        }
+        .active {
+            background-color: red !important;
+        }
