@@ -1,0 +1,98 @@
+
+<html>
+    <body>
+        <script>
+            //This is a program allowing editing, testing and exporting of nonograms to facilitate the creation of self made nonograms.
+            let width = 10;                                 //Width of the nonogram
+            let height = 10;                                //Height of the nonogram
+
+            const upperInfo = [];                           //Array for the upper numbers of the Nonogram
+            for(let i=0;i<width;i++){
+                upperInfo[i] = [];
+            }
+
+            const lowerInfo = [];                           //Array for the lower numbers of the Nonogram
+            for(let i=0;i<height;i++){
+                lowerInfo[i] = [];
+            }
+
+            const var field;
+            //textToInfo("10x10:1 2 11 -1 -1 -1 -1 -1 -1 -1 -1 -1 -&1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -");       //Testing
+            //alert(infoToText());                                                                          //Testing
+            function infoToText(){                          //Creates a String out of a given Nonogram to save Nonograms in a line of text to copy and save for later. Format is: widthxheight:ua1 ua2 ua3-ub1 ub2-...-&la1 la2-lb1 lb2...-
+                let text = width + "x" + height + ":";
+                upperInfo.forEach((item) => {item.forEach((item) => {text+=item;text+=" "});text+="-"});
+                text += "&"
+                lowerInfo.forEach((item) => {item.forEach((item) => {text+=item;text+=" "});text+="-"});
+                return text;
+            }
+
+            function textToInfo(text){                      //Changes all the parameters of the nonogram for a given string containing all the information (See infotToText function)
+                let firstIndex = text.indexOf("x");              //Finds first occurence of x to get the width parameter
+                if(firstIndex == -1){
+                    alert("Text has wrong Format!")
+                    return;
+                }
+                width = Number(text.substring(0,firstIndex));
+                secondIndex = text.indexOf(":");                //Finds first occurence of : to get the height parameter
+                if(secondIndex == -1){
+                    alert("Text has wrong Format!")
+                    return;
+                }
+                height = Number(text.substring(firstIndex+1,secondIndex));
+                let endOfUpper = text.indexOf("&");              //Finds first occurence of & to see where to switch in between upper- and lowerInfo
+                if(endOfUpper == -1){
+                    alert("Text has wrong Format!")
+                    return;
+                }
+                firstIndex = secondIndex;
+                outerCount = 0;
+                while((secondIndex = text.indexOf("-",firstIndex+1))<endOfUpper){                       //Iterates to the next - sign and gets the values out of that part for upperInfo
+                    findLineValues(text.substring(firstIndex+1, secondIndex), outerCount, true);
+                    firstIndex = secondIndex;
+                    outerCount++;
+                }
+                outerCount = 0;
+                firstIndex = endOfUpper;
+                while((secondIndex = text.indexOf("-",firstIndex+1))!=-1){                                  //Iterates to the next - sign and gets the values out of that part for lowerInfo   
+                    findLineValues(text.substring(firstIndex+1, secondIndex), outerCount, false);
+                    firstIndex = secondIndex;
+                    outerCount++;
+                }
+            }
+
+            function findLineValues(text, index, ifUpper){
+                let fi = 0;                                                         //firstIndex
+                let si = 0;                                                         //secondIndex
+                const list = [];        
+                while((si = text.indexOf(" ",fi+1))!=-1){                               //Checks for blank spaces and adds numbers to a list depending on the running markers for the position (Because numbers can be longer than one digit)
+                    list.push(Number(text.substring(fi,si)));
+                    fi = si;
+                }
+                if(ifUpper){                                                        //Adds the list to the parameters
+                    upperInfo[index] = list;
+                }
+                else{
+                    lowerInfo[index] = list;
+                }
+            }
+            
+            function emptyField(){                              //Initializes an empty field depending on the current Size
+                field = [];
+                for(let i=0;i<width;i++){
+                    const list = [];
+                    for(let j=0;j<height;j++){
+                        list.push(false);
+                    }
+                    field.push(list);
+                }
+            }
+
+            function fieldToData(){                         //Updates the numbers for a given drawn field
+                for(int i=0;i<height;i++){
+                    
+                }
+            }
+        </script>
+    </body>
+</html>
